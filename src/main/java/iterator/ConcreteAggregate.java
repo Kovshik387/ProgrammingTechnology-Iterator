@@ -23,7 +23,7 @@ public class ConcreteAggregate implements IAggregate {
 
     private class ImageIterator implements Iterator {
         private int current = 0;
-        private int max = findImages(Paths.get(fileTopic).toFile()).size();
+        private final int max = findImages(Paths.get(fileTopic).toFile()).size();
         private Image getImage(int iterator){
             return new Image(Paths.get(fileTopic + iterator + ".jpg").toUri().toString());
         }

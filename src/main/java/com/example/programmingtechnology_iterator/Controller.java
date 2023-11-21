@@ -40,8 +40,9 @@ public class Controller implements Initializable {
     }
     @FXML
     public void back_Button() {
+        var item = (Image)iterator.preview();
         //Получение
-        memeDirector.setImage((Image)iterator.preview());
+        memeDirector.setImage(item);
         //Конкретная реализация builder'а
         MemeBuilder builder = new MemeBuilder();
         //Объект, который должен быть создан
@@ -51,8 +52,9 @@ public class Controller implements Initializable {
     }
     @FXML
     public void forward_Button() {
+        var item = (Image)iterator.next();
         //Получение
-        memeDirector.setImage((Image)iterator.next());
+        memeDirector.setImage(item);
         //Конкретная реализация builder'а
         MemeBuilder builder = new MemeBuilder();
         //Объект, который должен быть создан
