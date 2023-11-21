@@ -4,14 +4,16 @@ import iterator.infastructure.IAggregate;
 import iterator.infastructure.Iterator;
 import javafx.scene.image.Image;
 
+import java.io.File;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class ConcreteAggregate implements IAggregate {
-    private String fileTopic;
-    private Image image;
-
-    public ConcreteAggregate(String fileTopic){
-        this.fileTopic = fileTopic;
+    private final String fileTopic = new File("src//main//resources//topic//").getAbsolutePath() + "\\";
+    private List<File> findImages(File dir){
+        return Arrays.stream(dir.listFiles()).toList();
     }
 
     @Override
@@ -21,8 +23,9 @@ public class ConcreteAggregate implements IAggregate {
 
     private class ImageIterator implements Iterator {
         private int current = 0;
+        private int max = findImages(Paths.get(fileTopic).toFile()).size();
         private Image getImage(int iterator){
-            return new Image(Paths.get(fileTopic + iterator + ".png").toUri().toString());
+            return new Image(Paths.get(fileTopic + iterator + ".jpg").toUri().toString());
         }
 
         @Override
@@ -36,12 +39,16 @@ public class ConcreteAggregate implements IAggregate {
                 return getImage(++current);
             }
             current = 1;
-            return getImage(1);
+            return getImage(current);
         }
 
         @Override
         public Object preview() {
-            return null;
+            if (this.hasNext(-1)){
+                return getImage(--current);
+            }
+            current = max;
+            return getImage(current);
         }
     }
 }
