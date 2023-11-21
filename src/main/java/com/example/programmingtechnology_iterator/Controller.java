@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
 public class Controller implements Initializable {
     private Iterator iterator;
     private MemeDirector memeDirector;
-
+    private MemeBuilder builder;
     @FXML
     private BorderPane borderPane;
 
@@ -32,11 +32,11 @@ public class Controller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ConcreteAggregate slides = new ConcreteAggregate();
         iterator = slides.createIterator();
+        builder = new MemeBuilder();
         //распорядитель
         memeDirector = new MemeDirector();
         //Получение
         memeDirector.setImage((Image)iterator.next());
-
     }
     @FXML
     public void back_Button() {
@@ -44,7 +44,6 @@ public class Controller implements Initializable {
         //Получение
         memeDirector.setImage(item);
         //Конкретная реализация builder'а
-        MemeBuilder builder = new MemeBuilder();
         //Объект, который должен быть создан
         Meme meme = memeDirector.Construct(builder);
         //Отображение полученного объекта
@@ -56,7 +55,6 @@ public class Controller implements Initializable {
         //Получение
         memeDirector.setImage(item);
         //Конкретная реализация builder'а
-        MemeBuilder builder = new MemeBuilder();
         //Объект, который должен быть создан
         Meme meme = memeDirector.Construct(builder);
         //Отображение полученного объекта
