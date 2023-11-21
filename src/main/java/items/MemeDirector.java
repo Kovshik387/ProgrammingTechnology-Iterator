@@ -10,6 +10,8 @@ public class MemeDirector {
 
     public Meme Construct(MemeBuilder builder){
         builder.setImage(this.image);
+        builder.setDesign();
+        builder.setColor();
         builder.setText();
         return builder.build();
     }
