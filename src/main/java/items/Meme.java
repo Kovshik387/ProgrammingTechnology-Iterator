@@ -9,7 +9,8 @@ import javafx.scene.text.Text;
 public class Meme {
     private final StackPane panel = new StackPane();
     public void addImage(Image image){
-        var temp_view = new ImageView(image);
+        var temp_view = new ImageView();
+        temp_view.setImage(image);
         temp_view.setFitHeight(190); temp_view.setFitWidth(292);
         this.panel.getChildren().add(temp_view);
     }

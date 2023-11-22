@@ -7,14 +7,10 @@ import iterator.ConcreteAggregate;
 import iterator.infastructure.Iterator;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Accordion;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.text.Text;
 
-import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -24,7 +20,6 @@ public class Controller implements Initializable {
     private MemeBuilder builder;
     @FXML
     private BorderPane borderPane;
-
     @FXML
     ImageView imagePhoto;
 
@@ -32,7 +27,7 @@ public class Controller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ConcreteAggregate slides = new ConcreteAggregate();
         iterator = slides.createIterator();
-        builder = new MemeBuilder();
+
         //распорядитель
         memeDirector = new MemeDirector();
         //Получение
@@ -40,6 +35,8 @@ public class Controller implements Initializable {
     }
     @FXML
     public void back_Button() {
+        builder = new MemeBuilder();
+        memeDirector = new MemeDirector();
         var item = (Image)iterator.preview();
         //Получение
         memeDirector.setImage(item);
@@ -51,6 +48,8 @@ public class Controller implements Initializable {
     }
     @FXML
     public void forward_Button() {
+        builder = new MemeBuilder();
+        memeDirector = new MemeDirector();
         var item = (Image)iterator.next();
         //Получение
         memeDirector.setImage(item);
