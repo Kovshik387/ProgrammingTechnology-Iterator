@@ -3,8 +3,9 @@ package items;
 import javafx.scene.image.Image;
 
 public class MemeDirector {
-    private Image image;
-    public void setImage(Image image){
+    private final Image image;
+
+    public MemeDirector(Image image){
         this.image = image;
     }
 
@@ -15,4 +16,5 @@ public class MemeDirector {
         builder.setText();
         return builder.build();
     }
+
 }
