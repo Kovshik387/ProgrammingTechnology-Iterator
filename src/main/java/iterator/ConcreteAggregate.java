@@ -30,7 +30,12 @@ public class ConcreteAggregate implements IAggregate {
 
         @Override
         public boolean hasNext() {
-            return !getImage(current + 1).isError();
+            return current >= 0 && current + 1 <= max;
+        }
+
+        @Override
+        public boolean hasPrevious() {
+            return !(current - 1 < 1);
         }
 
         @Override
@@ -44,7 +49,7 @@ public class ConcreteAggregate implements IAggregate {
 
         @Override
         public Object preview() {
-            if (this.hasNext()){
+            if (this.hasPrevious()){
                 return getImage(--current);
             }
             current = max;
