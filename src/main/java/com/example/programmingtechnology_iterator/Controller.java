@@ -15,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
 import java.net.URL;
@@ -24,72 +25,68 @@ public class Controller implements Initializable {
     private Iterator iterator;
     private MemeDirector memeDirector;
     private MemeBuilder builder;
+    private Meme meme;
+    private FadeTransition fade;
     private Timeline timeline;
     @FXML
     private BorderPane borderPane;
     @FXML
     ImageView imagePhoto;
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        timeline = new Timeline(new KeyFrame(new Duration(1000), new EventHandler<ActionEvent>() {
+        timeline = new Timeline(new KeyFrame(new Duration(2000), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                forward_Button();
+                forward_Button(); setFadeStackOptions();
             }
         }));
 
+        fade = new FadeTransition();
         ConcreteAggregate slides = new ConcreteAggregate();
         iterator = slides.createIterator();
-
-        //распорядитель
-        memeDirector = new MemeDirector();
-        //Получение
-        memeDirector.setImage((Image)iterator.next());
-
         timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
+        forward_Button();
     }
     @FXML
     public void back_Button() {
         builder = new MemeBuilder();
-        memeDirector = new MemeDirector();
+
         var item = (Image)iterator.preview();
-        //Получение
-        memeDirector.setImage(item);
-        //Конкретная реализация builder'а
-        //Объект, который должен быть создан
-        Meme meme = memeDirector.Construct(builder);
-        //Отображение полученного объекта
+        memeDirector = new MemeDirector(item);
+
+        meme = memeDirector.Construct(builder);
+
         borderPane.setCenter(meme.getPanel());
     }
     @FXML
     public void forward_Button() {
         builder = new MemeBuilder();
-        memeDirector = new MemeDirector();
 
         var item = (Image)iterator.next();
-        //Получение
-        memeDirector.setImage(item);
-        FadeTransition ft = new FadeTransition();
-        //Конкретная реализация builder'а
-        //Объект, который должен быть создан
-        Meme meme = memeDirector.Construct(builder);
-        //Отображение полученного объекта
-        borderPane.setCenter(meme.getPanel());
+        memeDirector = new MemeDirector(item);
 
-        ft.setNode(meme.getPanel());
-        ft.setDuration(new Duration(2000));
-        ft.setFromValue(1.0); ft.setToValue(0.0);
-        ft.setCycleCount(6); ft.play();
+        meme = memeDirector.Construct(builder);
+
+        borderPane.setCenter(meme.getPanel());
     }
 
     public void startLoop_Button(ActionEvent actionEvent) {
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
+        setFadeStackOptions();
+    }
+
+    private void setFadeStackOptions(){
+        fade.setNode(this.meme.getPanel());
+        fade.setCycleCount(1);
+        fade.setDuration(new Duration(1950));
+        fade.setFromValue(1.0);
+        fade.setToValue(0.0); fade.play();
     }
 
     public void endLoop_Button(ActionEvent actionEvent) {
-        timeline.stop();
+        timeline.stop(); fade.stop();
     }
 }
